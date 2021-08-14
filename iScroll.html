@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./statics/iScroll.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            width: 300px;
+            height: 200px;
+            /* 这里为什么需要有个定位呢 因为子元素的定位 是相对于最近的有定位的父级元素来说的 */
+            /* 所以下面的ul有个定位 意思大概就是这里加了定位之后 子元素ul也有定位 两者才能在一个平面上 一个层级上 */
+            /* 如果这里没有定位 那绝对定位直接相对于整个页面的来定位 ul和wrap直接不在一个层级上了 所以你设置的overflow也没法实现效果 */
+            position: relative;
+            overflow: hidden;
+            top: 100px;
+            left: 100px;
+        }
+
+        .wrap>ul {
+            /* 这个滚动库其实是在修改ul的坐标 所以得设置成绝对定位 */
+            position: absolute;
+            /* 这句代码是最大宽度的核心 当这个元素设置了下面这个属性 就会无视外面容器的宽度 以content全部展示出来优先 */
+            /* 也就是所谓的最大宽度 */
+            white-space: nowrap;
+            /* 有些时候 我们不会去用这个最大宽度 大多是时候 可能直接设置width 设置一个足够大的值 也能解决问题 我们称之为 很大宽度 */
+            /* 但是在现在这个滚动情景下，“很大宽度”就不合适了 因为你要保证滑倒头部和尾部的时候 不能有空白 要完全被图片去填充 */
+            /* 好奇是什么样子的话你可以解开下面这条属性的注释试一下 */
+            /* width: 2000px; */
+        }
+
+        li {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap" class="wrap">
+        <ul>
+            <li><img src="https://catalinazzz.oss-cn-beijing.aliyuncs.com/image/QQ%E5%9B%BE%E7%89%8720210618193454.png"
+                    alt=""></li>
+            <li><img src="https://catalinazzz.oss-cn-beijing.aliyuncs.com/image/nanase.png" alt=""></li>
+            <li><img src="https://catalinazzz.oss-cn-beijing.aliyuncs.com/image/bigSur.jpg" alt=""></li>
+            <li><img src="https://catalinazzz.oss-cn-beijing.aliyuncs.com/image/QQ%E5%9B%BE%E7%89%8720201030212228.jpg"
+                    alt=""></li>
+            <li><img src="https://catalinazzz.oss-cn-beijing.aliyuncs.com/image/QQ%E5%9B%BE%E7%89%8720210803013104.jpg"
+                    alt=""></li>
+        </ul>
+    </div>
+
+    <script>
+        new IScroll('#wrap', {
+            scrollbars: true,
+            scrollX: true,
+            scrollY: false
+        });
+    </script>
+</body>
+
+</html>
