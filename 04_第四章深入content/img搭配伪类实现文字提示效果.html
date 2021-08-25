@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>img搭配伪类实现文字提示效果</title>
+    <style>
+        /* img标签本身inline，但是由于是替换元素，所以可以遵守css尺寸，但是在没有src情况下，恢复成为普通的内联元素，所以要设置成inline-block 才能设置宽高 */
+        img {
+            display: inline-block;
+            width: 256px;
+            height: 192px;
+            /* 隐藏Firefox alt文字 */
+            color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 原理很妙，没有src属性时，直接隐藏img的显示，但是在有src的时候 本身也不支持伪类 */
+        /* 这里有个🕳，设置了这种情况下hidden，所以你鼠标是无法触碰到img元素的，所以设置一个before，可以覆盖在img表面，可以触发hover */
+        img:not([src]) {
+            /* 隐藏Chrome alt文字以及银色边框 */
+            visibility: hidden;
+        }
+
+        /* 除了好看 主要是为了触发hover */
+        /* 伪类的尺寸相对于主标签 也就是img */
+        img::before {
+            /* 淡蓝色占位背景 */
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f3f9;
+            visibility: visible;
+        }
+
+        /* 这个after就是提示信息alt了 */
+        img::after {
+            /* 黑色alt信息条 */
+            content: attr(alt);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            line-height: 30px;
+            background-color: rgba(0, 0, 0, .5);
+            color: white;
+            font-size: 14px;
+            transform: translateY(100%);
+            /* 来点过渡动画效果 */
+            transition: transform .2s;
+            visibility: visible;
+        }
+
+        img:hover::after {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <img alt="sssss">
+
+</body>
+
+</html>
